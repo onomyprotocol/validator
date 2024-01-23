@@ -49,13 +49,13 @@ As a validator, you will run:
 
 - Run relayer nodes between parent and consumer chains via IBC Relayer Paths.
 - [Hermes Documentation](https://hermes.informal.systems/)
-- [Example Hermes Config](https://github.com/onomyprotocol/validator/ibc-relayers/example_hermes_config.toml)
+- [Example Hermes Config](https://github.com/onomyprotocol/validator/tree/main/ibc-relayers/example_hermes_config.toml)
 
 
 ### Interchain Security
 
-- [ICS Background Information](https://github.com/onomyprotocol/validator/replicated-security/rs-overview.md)
-- [New Consumer Chain Bootstrapping Documentation](https://github.com/onomyprotocol/validator/replicated-security/bootstrapping.md)
+- [ICS Background Information](https://github.com/onomyprotocol/validator/tree/main/replicated-security/rs-overview.md)
+- [New Consumer Chain Bootstrapping Documentation](https://github.com/onomyprotocol/validator/tree/main/replicated-security/bootstrapping.md)
 
 
 ## Documentation for Contributors
