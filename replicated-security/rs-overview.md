@@ -1,0 +1,24 @@
+Replicated Security / ICS Overview
+----------------------------------
+
+Replicated Security (also referred to as ICS, originally "interchain-security") comprises two modules: a provider module and a consumer module. These modules facilitate the replication of the security from the provider chain (with the provider module) onto the consumer chain (with the consumer module).
+
+### Provider and Consumer Chains in Onomy Network
+
+Onomy's original main chain ([Onomy GitHub Repository](https://github.com/onomyprotocol/onomy)) functions as a provider chain. The ONEX chain and Arc chains within the Onomy network serve as consumer chains. For the ONEX chain, the market module is detailed at [Onomy Market Module](https://github.com/onomyprotocol/market). The `market/app/app.go` lacks a consumer module, rendering it a standalone entity primarily used for devnet testing. The multiverse repository ([Onomy Multiverse Repository](https://github.com/onomyprotocol/multiverse)) incorporates functional modules with an ICS consumer module, forming the basis for testnet and production binaries (refer to branches for different chains).
+
+### Consumer-Democracy Model
+
+Onomy adopts a consumer-democracy model, where consumer chains possess standard governance and staking modules, enabling the formation of a set of bonded validators. It is important to note that the set of validators utilized for replicated security is distinct from the consumer-side bonded validators. In fact, consumer chains initially have no bonded validators, as block-to-block signing is managed by the tendermint keys of the replicated security set. Currently, the bonded validators primarily influence governance voting powers. Depending on the specific chain, the bond token might be a newly minted token, an IBC token, or rely on future provider-driven governance (refer to cosmos/interchain-security#1271).
+
+### Replicated Security Set and Validator Dynamics
+
+The replicated security set is determined by the provider chain. Validators on the provider chain initially use their existing tendermint keys in the set, with an option to modify this through the `assign-consensus-key` command. The process for initiating a consumer chain is detailed in `bootstrapping.md`. Changes in the provider chain's validator set automatically trigger the creation of IBC packets. These packets, upon reaching consumer chains, update the replicated security set. Validators on the provider chain are advised to also operate corresponding consumer nodes with their designated consensus key to avoid potential slashing penalties for downtime.
+
+### Onomy Specific Notes
+
+Onomy currently utilizes github.com/cosmos/interchain-security v1.1.0-multiden for its Producer and v1.2.0-multiden for its Consumers. Notably, the canonical versions for the Producer and Consumers can vary. Onomy prioritizes versions that have undergone rigorous testing on Gaia. The version of interchain-security in use dictates the specific SDK version required. While future plans of the ICS team include merging all ICS functionality into the main Cosmos-SDK branch, Onomy currently branches the head commit of the ICS team's patches on Cosmos-SDK to the Onomy-SDK repository ([Onomy SDK Repository](https://github.com/onomyprotocol/onomy-sdk)), labeling it as "v0.45.16-ics-base". This base version is the foundation for chains without unique SDK patches.
+
+For the provider chain, Onomy incorporates custom patches atop the Cosmos-SDK. The update process involves rebasing these patches on the -ics-base commits to create an -ics-onomy branch, such as [Onomy SDK - ICS Onomy Branch](https://github.com/onomyprotocol/onomy-sdk/tree/v0.45.16-ics-onomy). It's critical to use rebases or commit-by-commit cherry-picks, avoiding merges. This branch then integrates with the Onomy repo ([Onomy GitHub Repository](https://github.com/onomyprotocol/onomy)) alongside the corresponding interchain-security producer version. Updates to the super_orchestrator tests should align with the latest developments in onomy_tests.
+
+Customization in Onomy includes modifying the PreCCV filtering ([Onomy PreCCV Filtering](https://github.com/onomyprotocol/multiverse/blob/main/app/consumer-democracy/consumer-ante/msg_filter_ante.go)). This alteration restricts certain MsgConnectionOpenInits and MsgChannelOpenInits, ensuring the first channel opened is the ICS channel (as utilized in `bootstrapping.md`). ICS creates a transfer channel for rewards, which also facilitates the transfer of canonical IBC tokens from the producer. By guaranteeing channel-1 as the transfer channel, the IBC token can be predetermined before chain genesis, enabling its use in parameters without necessitating post-launch governance changes.

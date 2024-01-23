@@ -33,14 +33,12 @@ As a validator, you will run:
 
 #### How to install Onomy Validator Software
 
-- [Mainnet](#)
-- [Testnet](#)
+- [Mainnet](https://github.com/onomyprotocol/validator/tree/main/mainnet)
+- [Testnet](https://github.com/onomyprotocol/validator/tree/main/testnet)
 
 #### Running a Full Node
 
-- [StateSync Node Setup](#)
-- [IBC Relayer Paths](#)
-- [Example Configs](#)
+- [Full Node Setup (StateSync Available)](https://github.com/onomyprotocol/validator/blob/main/mainnet/docs/full.md)
 
 ### Networking
 
@@ -49,16 +47,17 @@ As a validator, you will run:
 
 ### IBC Relaying
 
-- Run relayer nodes between parent and consumer chains.
+- Run relayer nodes between parent and consumer chains via IBC Relayer Paths.
 - [Hermes Documentation](https://hermes.informal.systems/)
-- [Example Hermes File](#)
+- [Example Hermes Config](https://github.com/onomyprotocol/validator/ibc-relayers/example_hermes_config.toml)
+
 
 ### Interchain Security
 
-- [ICS Background Information](#)
-- [Bootstrapping Documentation](#)
+- [ICS Background Information](https://github.com/onomyprotocol/validator/replicated-security/rs-overview.md)
+- [New Consumer Chain Bootstrapping Documentation](https://github.com/onomyprotocol/validator/replicated-security/bootstrapping.md)
 
 
 ## Documentation for Contributors
 
-For those interested in contributing to the Onomy Protocol, please refer to our comprehensive [Contributor Documentation](#).
+For those interested in contributing to the Onomy Protocol, please refer to our [Contributor Documentation](https://github.com/onomyprotocol/validator/contributing).
