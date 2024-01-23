@@ -60,4 +60,4 @@ As a validator, you will run:
 
 ## Documentation for Contributors
 
-For those interested in contributing to the Onomy Protocol, please refer to our [Contributor Documentation](https://github.com/onomyprotocol/validator/contributing).
+For those interested in contributing to the Onomy Protocol, please refer to our [Contributor Documentation](https://github.com/onomyprotocol/validator/tree/main/contributing).
