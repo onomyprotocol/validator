@@ -1,9 +1,5 @@
 # Validator on the Onomy Network
 
-Validators should not be allowed to join set with a sufficient stake. Mainnet manager to supply NOM to those
-stakeholders wishing to run the validator. This mainnet is for stakeholders only with 225k+ NOM. Anyone may run a node,
-but only stakeholders may participate in validating the network.
-
 # Steps to run the validator node
 
 * Go to [scripts](../scripts) folder
@@ -30,7 +26,7 @@ Check that the output is without errors and fails.
 
 * Init validator
 
-    * Init the validator account to be deposited. The script will just show the keys if they already exist.
+    * Init the validator account. The script will just show the keys if they already exist.
 
     ```
     ./init-validator-keys.sh
@@ -41,12 +37,6 @@ Check that the output is without errors and fails.
     ```
     onomyd keys show validator -a --keyring-backend pass
     ```
-
-  **!!! Attention !!!***
-
-  In case you want the address to be added to the genesis file (before the first launch) share the validator address
-  with the onomy team. And wait until the genesis file is ready. Then you will need to update/pull the "chain" folder
-  and proceed with the next steps.
 
 * Check that pass is loaded
 
@@ -74,7 +64,7 @@ And then repeat the previously failed operation.
     ./init-full-node.sh
     ```
 
-* Init statesync or use [genesis binaries](genesis-binaries.md) instruction to run from the genesis block.
+* Init statesync.
 
     ```
     ./init-statesync.sh
@@ -136,102 +126,16 @@ And then repeat the previously failed operation.
     ./add-service.sh onomyd ${PWD}/start-onomyd.sh
     ```
 
-* Get tokens from master account (***!!! Only in case your account wasn't set to the genesis file. If it was set - skip
-  that step !!!***).
-    * Request 250k noms (225k min stake for validator, 1k for orchestrator and 1k for transactions payments) tokens for
-      validator from the master account by "text" request to onomy. Example how to send
-    ```
-    onomyd tx bank send {sender-address} {validator-address} 250000000000000000000000anom --gas auto --gas-adjustment 1.5 --chain-id=onomy-mainnet-1 --keyring-backend pass
-    ```
-
-    * Then check the balance on validator node
+* Ensure you have the required self-bond to operate a validator node. 225K NOM at the time of this writing.
+    * Check the balance on validator node
 
     ```
     onomyd q bank balances $(onomyd keys show validator -a --keyring-backend pass)
     ```
 
-  If the "amount" of noms >= 250k is updated you are ready to become a validator
+  If the "amount" of noms >= 225k is updated you are ready to become a validator
 
 * Create a new onomy validator
-
-  **!!! Attention !!!**
-
-  Once you create a validator, you will have 500 blocks (approximately 40 minutes) to start the orchestrator, otherwise
-  the validator will be slashed. Read the full instruction before proceed with the next step.
-
-    ```
-    ./create-validator.sh
-    ```
-
-Also you can check all current validators now.
-
-    ```
-    onomyd q staking validators
-    ```
-
-* Send 1k noms tokens from you validator to your orchestrator
-
-    ```
-    onomyd tx bank send $(onomyd keys show validator -a --keyring-backend pass) $(onomyd keys show eth-orchestrator -a --keyring-backend pass) 1000000000000000000000anom --gas auto --gas-adjustment 1.5 --chain-id=onomy-mainnet-1 --keyring-backend pass
-    ```
-
-Check the orchestrator balance now
-
-    ```
-    onomyd q bank balances $(onomyd keys show eth-orchestrator -a --keyring-backend pass)
-    ```
-
-* Run orchestrator
-
-    * Also add the private key of the ethereum wallet which will be used for orchestrator
-
-      ```
-      pass insert keyring-onomy/eth-orchestrator-eth-private-key  
-      ```
-
-    * Init eth orchestrator
-
-      ```
-      ./init-eth-orchestrator.sh
-      ```
-    * Check that your Ethereum address is in the list of current valset
-
-      ```
-      onomyd q gravity current-valset
-      ```
-
-    * Before running the script set env variable
-
-        * ETH_RPC_ADDRESS - the RPC address of the Ethereum node
-
-    * start-orchestrator
-
-       ```
-       ./start-eth-orchestrator.sh &>> $HOME/.onomy/logs/eth-orchestrator.log &
-       ```
-
-      Or add and start as a service (strongly recommended). You need to run it from the **sudo** user.
-       ```
-        ./add-service.sh eth-orchestrator ${PWD}/start-eth-orchestrator.sh
-       ```
-
-      !!! If you use the service mode, then after the reboot the service will request the orchestrator key from the
-      pass, which is protected by the "Passphrase" and will fail. !!!
-
-      In order to restore the orchestrator after the reboot (or in the case of `gpg: decryption failed: No secret key` error), you need to call
-       ```
-        ./load-keys.sh
-       ```
-      The script will load the required key to the temp cache and the orchestrator service will be able to get it after
-      the next automatic restart.
-
-      To get the orchestrator logs you can use the command:
-      ```
-        journalctl -u eth-orchestrator.service -n 100 --no-pager
-      ```
-      If in the last lines you see the message ``` Orchestrator resync complete, Oracle now operational``` then the
-      orchestrator successfully restarted.
-
 
 * Optionally run node exporter
 
