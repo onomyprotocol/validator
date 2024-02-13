@@ -13,7 +13,7 @@ The <chain-id> chain will be launched as a consumer chain in Onomy testnet.
 * Binary: 
    * Version: [](https://github.com/notional-labs/Composable-ICS-tesnet/raw/main/binaries/v5.0.0/centaurid)
    * SHA256: ``
-* Onomy GitHub repository: https://github.com/notional-labs/composable-centauri
+* Onomy GitHub repository: https://github.com/onomyprotocol/onomy
 - Peers: ``
 - Endpoints: 
     - RPC: ``
@@ -102,7 +102,7 @@ The validator also need to setup the `chain-id` consumer chain. Here is the comm
 # detail of setup will appear here
 ```
 
-The validator **MUST NOT** run the node but wait until the new genesis is published on Onomy testnet, which will be detailed in step **[5. Vote the cosumer addition proposal](#5-vote-the-cosumer-addition-proposal)**.
+The validators **MUST NOT** run the node but wait until the new genesis is published on Onomy testnet, which will be detailed in step **[5. Vote the cosumer addition proposal](#5-vote-the-cosumer-addition-proposal)**.
 
 ### 5. Vote the cosumer addition proposal
 The proposal of launching <chain-id> as consumer chain will be submitted on Onomy provider chain, and the validators should partivipate in voting the proposal. After the proposal is passed, the validators should wait until the `spawn_time` and replace the old genesis file with the new `genesis-with-ccv.json` file from Onomy testnet repo.
