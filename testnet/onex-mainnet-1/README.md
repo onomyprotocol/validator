@@ -2,18 +2,18 @@
 
 ## Detail
 
-The `onex-mainnet-1` chain will be launched as a consumer chain in Onomy testnet.
+The `onex-mainnet-1` chain will be launched as a consumer chain in Onomy mainnet.
 
 - Network information: https://github.com/onomyprotocol/validator/tree/main/testnet
 - Chain ID: `onex-mainnet-1`
-* Spawn time: `March 4th, 2024`
+* Spawn time: `March 4th, 2024` (Will be updated soon)
 * Genesis file (without CCV): https://raw.githubusercontent.com/onomyprotocol/validator/main/testnet/onex-mainnet-1/genesis-without-ccv.json
 * Genesis with CCV: Available soon
 - Current version: `v1.0.3-onex`
 * Binary: 
    * Version: [v1.0.3-onex](https://github.com/onomyprotocol/multiverse/releases/tag/v1.0.3-onex)
    * SHA256: `e719ac86618953dee759e111c414cded126d54b8b8ae4f9f8b21015b06c1d91c`
-* Onomy GitHub repository: https://github.com/onomyprotocol/multiverse
+* Onex GitHub repository: https://github.com/onomyprotocol/multiverse
 - Peers: ``
 - Endpoints: 
     - RPC: ``
@@ -31,9 +31,9 @@ The `onex-mainnet-1` chain will be launched as a consumer chain in Onomy testnet
 ## Setup Instruction
 
 ### 1. Joining Onomy provider chain (onomy-mainnet-1) as a validator
-First, validators need to run Onomy provider chain. To setup the node and join the network, please follow instructions in [mainnet documentation](https://github.com/onomyprotocol/validator/blob/main/mainnet/readme.md).
+First, validators need to run the Onomy provider chain. To set up the node and join the network, please follow the instructions in [mainnet documentation](https://github.com/onomyprotocol/validator/blob/main/mainnet/readme.md).
 
-Here is the detail of Onomy provider chain:
+Here is the detail of the Onomy provider chain:
 - Chain ID: `onomy-mainnet-1`
 - Version: [v1.1.4](https://github.com/onomyprotocol/onomy/releases/tag/v1.1.4)
 - Genesis: https://raw.githubusercontent.com/onomyprotocol/validator/main/mainnet/genesis/genesis-mainnet-1.json
@@ -48,21 +48,21 @@ Here is the detail of Onomy provider chain:
 
 
 ### 4. Setup Onex consumer chain
-The validator also need to setup the `chain-id` consumer chain. Here is the commands to install the binary and setup new chain.
+The validators also need to set up the `onex-mainnet-1` consumer chain. Here are the commands to install the binary and set up the new chain.
 ```bash
 # detail of setup will appear here
 cd $HOME/go/bin
 wget -O onexd https://github.com/onomyprotocol/multiverse/releases/download/v1.0.3-onex/onexd && chmod +x onexd
-onexd version # v1.1.4
+onexd version # v1.0.3-onex
 onexd init <moniker> --chain-id onex-mainnet-1
 cd $HOME/.onex/
 wget -O config/genesis.json https://raw.githubusercontent.com/onomyprotocol/validator/main/testnet/onex-mainnet-1/genesis-without-ccv.json
 ```
 
-The validators **MUST NOT** run the node but wait until the new genesis is published on Onomy repository, which will be detailed in step **[5. Vote the cosumer addition proposal](#5-vote-the-cosumer-addition-proposal)**.
+The validators **MUST NOT** run the node but wait until the new genesis is published on the Onomy repository, which will be detailed in step **[5. Vote the consumer-addition proposal](#5-vote-the-consumer-addition-proposal)**.
 
-### 5. Vote the cosumer addition proposal
-The proposal of launching `onex-mainnet-1` as consumer chain will be submitted on Onomy provider mainnet, and the validators should partivipate in voting the proposal. After the proposal is passed, the validators should wait until the `spawn_time` and replace the old genesis file with the new `genesis-with-ccv.json` file from Onomy testnet repo.
+### 5. Vote on the consumer-addition proposal
+The proposal to launch `onex-mainnet-1` as a consumer chain will be submitted on the Onomy provider mainnet and the validators should participate in voting for the proposal. After the proposal is passed, the validators should wait until the `spawn_time` and replace the old genesis file with the new `genesis-with-ccv.json` file from the Onomy repository.
 
 ```bash
 wget -O /$HOME/.onex/config/genesis.json https://raw.githubusercontent.com/onomyprotocol/validator/main/testnet/onex-mainnet-1/genesis.json
@@ -70,7 +70,7 @@ wget -O /$HOME/.onex/config/genesis.json https://raw.githubusercontent.com/onomy
 
 ### 6. Wait for genesis and run
 
-At the genesis time, validators can start the cosumer chain by running
+At the genesis time, validators can start the consumer chain by running
 ```bash
 onexd start
 ```
@@ -80,8 +80,8 @@ onexd start
 |Step|When?|What do you need to do?|What is happening?|
 |----|--------------------------------------------------|----------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 |1   |ASAP                                              |Join the Onomy mainnet `onomy-mainnet-1`  as a full node and sync to the tip of the chain.|Validator machines getting caught up on existing Composable chain's history                                                                         |
-|2   | Consumer Addition proposal on provider chain | [PROVIDER] Optional: Vote for the consumer-addition proposal.  | The proposals that provide new detail for the launch.                            |
-|3   |The proposals passed                                 |Nothing                                                                           | The proposals passed, `spawn_time` is set. After `spawn_time` is reached, the `ccv.json` file containing `ccv` state will be provided from provider chain.
-|4   |`spawn_time` reached                                  |The `genesis-with-ccv.json` file will be provided in the testnets repo. Replace old `genesis.json` in the `$HOME/.onex/config` directory with new `genesis-with-ccv.json`. The new `genesis-with-ccv.json` file with ccv data will be published in [onomyprotocol/valiadtor](https://github.com/onomyprotocol/validator/tree/main/testnet/onex-mainnet-1) |
+|2   | Consumer Addition proposal on provider chain | [PROVIDER] Optional: Vote for the consumer-addition proposal.  | The proposals that provide new details for the launch.                            |
+|3   |The proposals passed                                 |Nothing                                                                           | The proposals passed, `spawn_time` is set. After `spawn_time` is reached, the `ccv.json` file containing `ccv` state will be provided from the provider chain.
+|4   |`spawn_time` reached                                  |The `genesis-with-ccv.json` file will be provided in the testnets repo. Replace the old `genesis.json` in the `$HOME/.onex/config` directory with the new `genesis-with-ccv.json`. The new `genesis-with-ccv.json` file with ccv data will be published in [onomyprotocol/valiadtor](https://github.com/onomyprotocol/validator/tree/main/testnet/onex-mainnet-1) |
 |5   |Genesis reached     | Start your node with the consumer binary | onex-mainnet-1 chain will start and become a consumer chain.                                                                                     |
 |6   |3 blocks after upgrade height                     |Celebrate! :tada: 🥂                                                |<chain> blocks are now produced by the provider validator set|
